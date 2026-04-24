@@ -5,6 +5,7 @@ import { ClientSettingsProvider } from './context/ClientSettingsProvider';
 
 import Header from './components/Main/Header/Header';
 import Footer from './components/Main/Footer/Footer';
+import Calculator from './components/Main/Calculator/Calculator';
 
 const App = () => {
   return (
@@ -30,7 +31,9 @@ const App = () => {
             display: 'flex',
             flexDirection: 'row',
           }}
-        ></Box>
+        >
+          <Calculator />
+        </Box>
         <Footer />
       </Box>
     </ClientSettingsProvider>
