@@ -1,0 +1,52 @@
+import { type FC } from 'react';
+
+import useClientSettings from '../../../hooks/useClientSettings';
+
+import { Box, Typography } from '@mui/material';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+
+import IconButton from '../../UI/IconButton/IconButton';
+
+// no props
+
+// component
+const Footer: FC = () => {
+  const { themeIsDarkMode, toggleThemeIsDarkMode } = useClientSettings();
+
+  return (
+    <Box
+      component='footer'
+      sx={{
+        py: 1,
+        zIndex: (theme) => theme.zIndex.drawer + 1,
+        backgroundColor: (theme) =>
+          themeIsDarkMode ? theme.palette.grey[800] : theme.palette.grey[300],
+      }}
+    >
+      <IconButton
+        aria-label='toggletheme'
+        tooltip='Toggle Theme'
+        onClick={toggleThemeIsDarkMode}
+        color='default'
+        sx={{
+          position: 'absolute',
+          p: 0,
+          mx: 1,
+        }}
+      >
+        {themeIsDarkMode ? (
+          <Brightness4Icon fontSize='small' />
+        ) : (
+          <Brightness7Icon fontSize='small' />
+        )}
+      </IconButton>
+
+      <Typography variant='body2' align='center'>
+        &copy; 2026 Greg T. Wallace
+      </Typography>
+    </Box>
+  );
+};
+
+export default Footer;
