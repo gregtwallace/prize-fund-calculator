@@ -6,45 +6,30 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 
-// user specified configuration values for the calculator
-interface params {
-  positionsPaid: number;
-  fundsAvailable: number;
-  exponentBase: number;
-  yAxisShift: number;
-}
+import type { inputParams } from './inputs.ts';
+import { inputConformation } from './inputs.ts';
 
 // default values
-const defaultParams: params = {
+const inputParamsDefault: inputParams = {
   positionsPaid: 20,
   fundsAvailable: 10000,
   exponentBase: 8.5,
   yAxisShift: 0.1,
 };
 
-// function to calculate minimum acceptable yAxisShift for a given base
-const minYAxisShift = (base: number) => -1 / base;
-
-// function to return max base for a given prize fund
-const maxBase = (fundsAvailable: number) => fundsAvailable * 215;
-
 const Calculator = () => {
-  const [calcParams, setCalcParams] = useState<params>(defaultParams);
+  const [calcParams, setCalcParams] = useState<inputParams>(inputParamsDefault);
 
   // param handlers
   const formFieldPositionsPaidChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setCalcParams((prevState) => {
-      let newPosPaid = Number.parseInt(event.target.value);
-
-      // enforce minimum of 3
-      if (newPosPaid < 2) newPosPaid = 3;
-
-      return {
+      const newPosPaid = Number.parseInt(event.target.value);
+      return inputConformation({
         ...prevState,
         positionsPaid: newPosPaid,
-      };
+      });
     });
   };
 
@@ -52,15 +37,11 @@ const Calculator = () => {
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setCalcParams((prevState) => {
-      let newFunds = Number.parseInt(event.target.value);
-
-      // enforce minimum of 100
-      if (newFunds < 100) newFunds = 100;
-
-      return {
+      const newFunds = Number.parseInt(event.target.value);
+      return inputConformation({
         ...prevState,
         fundsAvailable: newFunds,
-      };
+      });
     });
   };
 
@@ -68,39 +49,12 @@ const Calculator = () => {
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setCalcParams((prevState) => {
-      let newBase = Number.parseFloat(event.target.value);
+      const newBase = Number.parseFloat(event.target.value);
 
-      // must be greater than 0
-      if (newBase <= 0) {
-        newBase = 0.1;
-      }
-
-      // cannot be 1
-      if (newBase === 1) {
-        // increasing base
-        if (prevState.exponentBase < 1) {
-          newBase = 1.1;
-        } else {
-          // decreasing base
-          newBase = 0.9;
-        }
-      }
-
-      // enforce maximum of 215 times the prize fund
-      if (newBase > maxBase(prevState.fundsAvailable))
-        newBase = maxBase(prevState.fundsAvailable);
-
-      // fix y-axis shift, if need be
-      let newYAxisShift = prevState.yAxisShift;
-      if (newYAxisShift < minYAxisShift(newBase)) {
-        newYAxisShift = minYAxisShift(newBase);
-      }
-
-      return {
+      return inputConformation({
         ...prevState,
         exponentBase: newBase,
-        yAxisShift: newYAxisShift,
-      };
+      });
     });
   };
 
@@ -108,16 +62,12 @@ const Calculator = () => {
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setCalcParams((prevState) => {
-      let newYAxisShift = Number.parseFloat(event.target.value);
+      const newYAxisShift = Number.parseFloat(event.target.value);
 
-      // enforce minimum of -1/Base
-      if (newYAxisShift < minYAxisShift(prevState.exponentBase))
-        newYAxisShift = minYAxisShift(prevState.exponentBase);
-
-      return {
+      return inputConformation({
         ...prevState,
         yAxisShift: newYAxisShift,
-      };
+      });
     });
   };
 
