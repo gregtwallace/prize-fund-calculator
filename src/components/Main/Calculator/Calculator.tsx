@@ -21,18 +21,6 @@ const Calculator = () => {
   const [calcParams, setCalcParams] = useState<inputParams>(inputParamsDefault);
 
   // param handlers
-  const formFieldPositionsPaidChangeHandler = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setCalcParams((prevState) => {
-      const newPosPaid = Number.parseInt(event.target.value);
-      return inputConformation({
-        ...prevState,
-        positionsPaid: newPosPaid,
-      });
-    });
-  };
-
   const formFieldFundsAvailableChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
@@ -41,6 +29,18 @@ const Calculator = () => {
       return inputConformation({
         ...prevState,
         fundsAvailable: newFunds,
+      });
+    });
+  };
+
+  const formFieldPositionsPaidChangeHandler = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setCalcParams((prevState) => {
+      const newPosPaid = Number.parseInt(event.target.value);
+      return inputConformation({
+        ...prevState,
+        positionsPaid: newPosPaid,
       });
     });
   };
@@ -96,18 +96,6 @@ const Calculator = () => {
             }}
           >
             <TextField
-              id='positions-paid'
-              name='positions-paid'
-              label='Positions Paid'
-              type='number'
-              value={calcParams.positionsPaid}
-              onChange={formFieldPositionsPaidChangeHandler}
-              fullWidth
-              variant='outlined'
-              sx={{ my: 1 }}
-            />
-
-            <TextField
               id='funds-available'
               name='funds-available'
               label='Total Funds Available'
@@ -124,6 +112,18 @@ const Calculator = () => {
                   ),
                 },
               }}
+            />
+
+            <TextField
+              id='positions-paid'
+              name='positions-paid'
+              label='Positions Paid'
+              type='number'
+              value={calcParams.positionsPaid}
+              onChange={formFieldPositionsPaidChangeHandler}
+              fullWidth
+              variant='outlined'
+              sx={{ my: 1 }}
             />
 
             <TextField

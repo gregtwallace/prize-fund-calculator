@@ -1,7 +1,7 @@
 // user specified configuration values for the calculator
 export interface inputParams {
-  positionsPaid: number;
   fundsAvailable: number;
+  positionsPaid: number;
   exponentBase: number;
   yAxisShift: number;
 }
@@ -31,14 +31,14 @@ const maxBase = (fundsAvailable: number): number => {
 // value is lower than the previous value
 export const inputConformation = (params: inputParams): inputParams => {
   //
-  // positionsPaid:
-  // enforce minimum of 3
-  if (params.positionsPaid < 2) params.positionsPaid = 3;
-
-  //
   // fundsAvailable:
   // enforce minimum of 100
   if (params.fundsAvailable < 100) params.fundsAvailable = 100;
+
+  //
+  // positionsPaid:
+  // enforce minimum of 3
+  if (params.positionsPaid < 3) params.positionsPaid = 3;
 
   //
   // exponentBase:
