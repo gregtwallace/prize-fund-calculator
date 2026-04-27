@@ -1,12 +1,12 @@
 import { type FC } from 'react';
 
-import useClientSettings from '../../../hooks/useClientSettings';
+import useClientSettings from './hooks/useClientSettings';
 
 import { Box, Typography } from '@mui/material';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 
-import IconButton from '../../UI/IconButton/IconButton';
+import IconButton from './components/UI/IconButton/IconButton';
 
 // no props
 

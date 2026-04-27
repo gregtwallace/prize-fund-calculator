@@ -6,68 +6,64 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 
-import type { inputParams } from './inputs.ts';
-import { inputConformation } from './inputs.ts';
+import type { inputFields } from './inputs.ts';
 
-// default values
-const inputParamsDefault: inputParams = {
-  positionsPaid: 20,
-  fundsAvailable: 10000,
-  exponentBase: 8.5,
-  yAxisShift: 0.1,
-};
+import PayTable from './PayTable';
+
+import { inputParamsDefault, inputConformation } from './inputs.ts';
+import { generateResults } from './results.ts';
 
 const Calculator = () => {
-  const [calcParams, setCalcParams] = useState<inputParams>(inputParamsDefault);
+  // calcInputs are the values used for the current on screen calculated values
+  const [calcInputs, setCalcInputs] = useState<inputFields>(inputParamsDefault);
+  const calcResult = generateResults(calcInputs);
+
+  // fieldParams holds the live input field values
+  const [formFields, setFormFields] = useState<inputFields>(inputParamsDefault);
 
   // param handlers
   const formFieldFundsAvailableChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    setCalcParams((prevState) => {
-      const newFunds = Number.parseInt(event.target.value);
-      return inputConformation({
-        ...prevState,
-        fundsAvailable: newFunds,
-      });
-    });
+    setFormFields((prevState) => ({
+      ...prevState,
+      fundsAvailable: event.target.value,
+    }));
   };
 
   const formFieldPositionsPaidChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    setCalcParams((prevState) => {
-      const newPosPaid = Number.parseInt(event.target.value);
-      return inputConformation({
-        ...prevState,
-        positionsPaid: newPosPaid,
-      });
-    });
+    setFormFields((prevState) => ({
+      ...prevState,
+      positionsPaid: event.target.value,
+    }));
   };
 
   const formFieldExponentBaseChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    setCalcParams((prevState) => {
-      const newBase = Number.parseFloat(event.target.value);
-
-      return inputConformation({
-        ...prevState,
-        exponentBase: newBase,
-      });
-    });
+    setFormFields((prevState) => ({
+      ...prevState,
+      exponentBase: event.target.value,
+    }));
   };
 
   const formFieldYAxisShiftChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    setCalcParams((prevState) => {
-      const newYAxisShift = Number.parseFloat(event.target.value);
+    setFormFields((prevState) => ({
+      ...prevState,
+      yAxisShift: event.target.value,
+    }));
+  };
 
-      return inputConformation({
-        ...prevState,
-        yAxisShift: newYAxisShift,
-      });
+  // make fields valid after user changes input
+  const formFieldOnBlurHandler = () => {
+    setFormFields((prevState) => {
+      const newVals = inputConformation(prevState);
+      setCalcInputs(newVals);
+      return newVals;
     });
   };
 
@@ -75,8 +71,8 @@ const Calculator = () => {
     <Container maxWidth='lg'>
       <Paper
         sx={{
-          my: 6,
-          py: 1,
+          my: 2,
+          py: 2,
           display: 'flex',
           flexDirection: 'column',
         }}
@@ -99,8 +95,8 @@ const Calculator = () => {
               id='funds-available'
               name='funds-available'
               label='Total Funds Available'
-              type='number'
-              value={calcParams.fundsAvailable}
+              value={formFields.fundsAvailable}
+              onBlur={formFieldOnBlurHandler}
               onChange={formFieldFundsAvailableChangeHandler}
               fullWidth
               variant='outlined'
@@ -118,8 +114,8 @@ const Calculator = () => {
               id='positions-paid'
               name='positions-paid'
               label='Positions Paid'
-              type='number'
-              value={calcParams.positionsPaid}
+              value={formFields.positionsPaid}
+              onBlur={formFieldOnBlurHandler}
               onChange={formFieldPositionsPaidChangeHandler}
               fullWidth
               variant='outlined'
@@ -130,8 +126,8 @@ const Calculator = () => {
               id='exponent-base'
               name='exponent-base'
               label='Exponent Base'
-              type='number'
-              value={calcParams.exponentBase}
+              value={formFields.exponentBase}
+              onBlur={formFieldOnBlurHandler}
               onChange={formFieldExponentBaseChangeHandler}
               fullWidth
               variant='outlined'
@@ -142,8 +138,8 @@ const Calculator = () => {
               id='y-axis-shift'
               name='y-axis-shift'
               label='Y-Axis Shift'
-              type='number'
-              value={calcParams.yAxisShift}
+              value={formFields.yAxisShift}
+              onBlur={formFieldOnBlurHandler}
               onChange={formFieldYAxisShiftChangeHandler}
               fullWidth
               variant='outlined'
@@ -154,6 +150,10 @@ const Calculator = () => {
           <Box sx={{ p: { xs: 3, sm: 4 } }}>TODO: Graph</Box>
         </Box>
       </Paper>
+
+      <Box>
+        <PayTable data={calcResult} />
+      </Box>
     </Container>
   );
 };
