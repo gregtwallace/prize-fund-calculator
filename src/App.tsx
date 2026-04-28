@@ -3,8 +3,10 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 import { ClientSettingsProvider } from './context/ClientSettingsProvider';
 
-import Header from './components/Main/Header/Header';
-import Footer from './components/Main/Footer/Footer';
+import Header from './Header';
+import Content from './Content';
+import Footer from './Footer';
+import Calculator from './components/Calculator/Calculator';
 
 const App = () => {
   return (
@@ -22,15 +24,9 @@ const App = () => {
         }}
       >
         <Header />
-        <Box
-          component='main'
-          sx={{
-            minHeight: 0,
-            flexGrow: 1,
-            display: 'flex',
-            flexDirection: 'row',
-          }}
-        ></Box>
+        <Content>
+          <Calculator />
+        </Content>
         <Footer />
       </Box>
     </ClientSettingsProvider>
