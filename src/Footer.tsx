@@ -3,8 +3,7 @@ import { type FC } from 'react';
 import useClientSettings from './hooks/useClientSettings';
 
 import { Box, Typography } from '@mui/material';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { Moon, Sun } from 'lucide-react';
 
 import IconButton from './components/UI/IconButton/IconButton';
 
@@ -35,11 +34,7 @@ const Footer: FC = () => {
           mx: 1,
         }}
       >
-        {themeIsDarkMode ? (
-          <Brightness4Icon fontSize='small' />
-        ) : (
-          <Brightness7Icon fontSize='small' />
-        )}
+        {themeIsDarkMode ? <Moon size={20} /> : <Sun size={20} />}
       </IconButton>
 
       <Typography variant='body2' align='center'>

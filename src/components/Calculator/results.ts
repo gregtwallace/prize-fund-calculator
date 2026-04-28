@@ -17,7 +17,8 @@ interface fundPoint {
 }
 
 // dataPoint contains the results of all of the calculations
-export interface dataPoint {
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+export type dataPoint = {
   position: number;
   xValue: number;
   yValue: number;
@@ -25,7 +26,7 @@ export interface dataPoint {
   fundsAbsolute: number;
   fundsAbsoluteRoundDiff: number;
   fundsAbsoluteRounded: number;
-}
+};
 
 // generateResults calculates the payout results based on the provided
 // input parameters

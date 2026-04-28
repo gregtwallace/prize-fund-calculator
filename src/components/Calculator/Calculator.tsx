@@ -8,6 +8,7 @@ import TextField from '@mui/material/TextField';
 
 import type { inputFields } from './inputs.ts';
 
+import PayChart from './PayChart';
 import PayTable from './PayTable';
 
 import { inputParamsDefault, inputConformation } from './inputs.ts';
@@ -147,7 +148,7 @@ const Calculator = () => {
             />
           </Box>
 
-          <Box sx={{ p: { xs: 3, sm: 4 } }}>TODO: Graph</Box>
+          <PayChart data={calcResult} />
         </Box>
       </Paper>
 
