@@ -6,7 +6,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-import type { dataPoint } from './results.ts';
+import type { dataPoint } from './results-exponent.ts';
 
 interface props {
   data: dataPoint[];
@@ -21,7 +21,7 @@ const PayTable = (props: props) => {
         <TableHead>
           <TableRow>
             <TableCell>Position</TableCell>
-            <TableCell align='right'>Percentage</TableCell>
+            <TableCell align='right'>Ideal Percent</TableCell>
             <TableCell align='right'>Payout</TableCell>
           </TableRow>
         </TableHead>

@@ -28,6 +28,10 @@ export type dataPoint = {
   fundsAbsoluteRounded: number;
 };
 
+const roundDownTo = (value: number, roundDownToNearest: number) => {
+  return Math.floor(value / roundDownToNearest) * roundDownToNearest;
+};
+
 // generateResults calculates the payout results based on the provided
 // input parameters
 export const generateResults = (inputVals: inputFields): dataPoint[] => {
@@ -99,7 +103,7 @@ export const generateResults = (inputVals: inputFields): dataPoint[] => {
   funcResult.map((funcPoint) => {
     const fundPercent = funcPoint.yValue / sumOfY;
     const fundAbsPreRound = fundPercent * fundsAvailable;
-    const fundAbsPostRound = Math.floor(fundAbsPreRound / roundTo) * roundTo;
+    const fundAbsPostRound = roundDownTo(fundAbsPreRound, roundTo);
 
     const fundPt = {
       position: funcPoint.position,
@@ -129,8 +133,7 @@ export const generateResults = (inputVals: inputFields): dataPoint[] => {
       totalDifference -= roundTo;
     } else if (totalDifference > 0) {
       fundPt.fundsAbsoluteRounded += totalDifference;
-      fundPt.fundsAbsoluteRounded = Math.round(fundPt.fundsAbsoluteRounded); // avoid weird decimal
-      totalDifference -= totalDifference;
+      totalDifference = 0;
     }
   });
 
@@ -144,10 +147,14 @@ export const generateResults = (inputVals: inputFields): dataPoint[] => {
       position: funcPoint.position,
       xValue: funcPoint.xValue,
       yValue: funcPoint.yValue,
-      fundsPerecentage: fundPoints[i].fundsPerecentage,
-      fundsAbsolute: fundPoints[i].fundsAbsolute,
-      fundsAbsoluteRoundDiff: fundPoints[i].fundsAbsoluteRoundDiff,
-      fundsAbsoluteRounded: fundPoints[i].fundsAbsoluteRounded,
+      // do some rounding for sanity
+      fundsPerecentage:
+        Math.round(fundPoints[i].fundsPerecentage * 10000) / 10000,
+      fundsAbsolute: Math.round(fundPoints[i].fundsAbsolute * 100) / 100,
+      fundsAbsoluteRoundDiff:
+        Math.round(fundPoints[i].fundsAbsoluteRoundDiff * 100) / 100,
+      fundsAbsoluteRounded:
+        Math.round(fundPoints[i].fundsAbsoluteRounded * 100) / 100,
     };
 
     resultData.push(dataPoint);

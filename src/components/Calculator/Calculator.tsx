@@ -12,7 +12,7 @@ import PayChart from './PayChart';
 import PayTable from './PayTable';
 
 import { inputParamsDefault, inputConformation } from './inputs.ts';
-import { generateResults } from './results.ts';
+import { generateResults } from './results-exponent.ts';
 
 const Calculator = () => {
   // calcInputs are the values used for the current on screen calculated values
