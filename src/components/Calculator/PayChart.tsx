@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 import { LineChart } from '@mui/x-charts/LineChart';
 
 import type { dataPoint } from './results-exponent.ts';
@@ -30,20 +31,19 @@ const PayChart = (props: props) => {
   const roundTo = Math.pow(10, yMax.toString().length - 1) * 2;
   const topVal = roundUpTo(yMax, roundTo);
 
-  let yWidth = 79; // 47, 54, 65, 72, 79
-  if (topVal.toString().length === 5) yWidth = 72;
-  else if (topVal.toString().length === 4) yWidth = 65;
-  else if (topVal.toString().length <= 3) yWidth = 54;
+  let yWidth = 75;
+  if (topVal.toString().length === 5) yWidth = 60;
+  else if (topVal.toString().length === 4) yWidth = 50;
+  else if (topVal.toString().length <= 3) yWidth = 40;
 
   // component render
   return (
-    <Box sx={{ minHeight: 400, p: 1 }}>
+    <Box component={Paper} sx={{ minHeight: 400 }}>
       <LineChart
         dataset={data}
         xAxis={[{ dataKey: 'position', label: 'Position', min: 1 }]}
         yAxis={[
           {
-            label: '$ Payout',
             width: yWidth,
             min: 0,
             valueFormatter: currencyFormatter,
