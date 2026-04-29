@@ -60,6 +60,7 @@ const PayChart = (props: props) => {
             dataKey: 'fundsAbsolute',
             label: 'Ideal',
             color: 'green',
+            valueFormatter: currencyFormatter,
           },
         ]}
       />
