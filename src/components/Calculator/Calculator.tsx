@@ -69,92 +69,81 @@ const Calculator = () => {
   };
 
   return (
-    <Container maxWidth='lg'>
-      <Paper
+    <Container>
+      <Box
         sx={{
-          my: 2,
-          py: 2,
-          display: 'flex',
-          flexDirection: 'column',
+          m: 1,
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', md: '1fr 2fr' },
+          gap: 1,
         }}
       >
         <Box
+          component={Paper}
           sx={{
-            display: 'grid',
-            gridTemplateColumns: { xs: '1fr', md: '5fr 7fr' },
+            p: 2,
           }}
         >
-          <Box
-            component='form'
-            sx={{
-              p: { xs: 3, sm: 4 },
-              borderRight: { md: '1px solid #E2E8F0' },
-              borderBottom: { xs: '1px solid #E2E8F0', md: 'none' },
+          <TextField
+            id='funds-available'
+            name='funds-available'
+            label='Total Funds Available'
+            value={formFields.fundsAvailable}
+            onBlur={formFieldOnBlurHandler}
+            onChange={formFieldFundsAvailableChangeHandler}
+            fullWidth
+            variant='outlined'
+            sx={{ my: 1 }}
+            slotProps={{
+              input: {
+                startAdornment: (
+                  <InputAdornment position='start'>$</InputAdornment>
+                ),
+              },
             }}
-          >
-            <TextField
-              id='funds-available'
-              name='funds-available'
-              label='Total Funds Available'
-              value={formFields.fundsAvailable}
-              onBlur={formFieldOnBlurHandler}
-              onChange={formFieldFundsAvailableChangeHandler}
-              fullWidth
-              variant='outlined'
-              sx={{ my: 1 }}
-              slotProps={{
-                input: {
-                  startAdornment: (
-                    <InputAdornment position='start'>$</InputAdornment>
-                  ),
-                },
-              }}
-            />
+          />
 
-            <TextField
-              id='positions-paid'
-              name='positions-paid'
-              label='Positions Paid'
-              value={formFields.positionsPaid}
-              onBlur={formFieldOnBlurHandler}
-              onChange={formFieldPositionsPaidChangeHandler}
-              fullWidth
-              variant='outlined'
-              sx={{ my: 1 }}
-            />
+          <TextField
+            id='positions-paid'
+            name='positions-paid'
+            label='Positions Paid'
+            value={formFields.positionsPaid}
+            onBlur={formFieldOnBlurHandler}
+            onChange={formFieldPositionsPaidChangeHandler}
+            fullWidth
+            variant='outlined'
+            sx={{ my: 1 }}
+          />
 
-            <TextField
-              id='exponent-base'
-              name='exponent-base'
-              label='Exponent Base'
-              value={formFields.exponentBase}
-              onBlur={formFieldOnBlurHandler}
-              onChange={formFieldExponentBaseChangeHandler}
-              fullWidth
-              variant='outlined'
-              sx={{ my: 1 }}
-            />
+          <TextField
+            id='exponent-base'
+            name='exponent-base'
+            label='Exponent Base'
+            value={formFields.exponentBase}
+            onBlur={formFieldOnBlurHandler}
+            onChange={formFieldExponentBaseChangeHandler}
+            fullWidth
+            variant='outlined'
+            sx={{ my: 1 }}
+          />
 
-            <TextField
-              id='y-axis-shift'
-              name='y-axis-shift'
-              label='Y-Axis Shift'
-              value={formFields.yAxisShift}
-              onBlur={formFieldOnBlurHandler}
-              onChange={formFieldYAxisShiftChangeHandler}
-              fullWidth
-              variant='outlined'
-              sx={{ my: 1 }}
-            />
-          </Box>
-
-          <PayChart data={calcResult} />
+          <TextField
+            id='y-axis-shift'
+            name='y-axis-shift'
+            label='Y-Axis Shift'
+            value={formFields.yAxisShift}
+            onBlur={formFieldOnBlurHandler}
+            onChange={formFieldYAxisShiftChangeHandler}
+            fullWidth
+            variant='outlined'
+            sx={{ my: 1 }}
+          />
         </Box>
-      </Paper>
 
-      <Box>
-        <PayTable data={calcResult} />
+        <PayChart data={calcResult} />
       </Box>
+
+      <PayTable data={calcResult} />
     </Container>
   );
 };
